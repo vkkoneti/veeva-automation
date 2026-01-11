@@ -1,0 +1,40 @@
+src
+├── main
+│   └── java
+│       └── com.veeva.automation
+│           ├── base
+│           │   ├── BasePage.java
+│           │   └── DriverFactory.java
+│           ├── utils
+│           │   ├── WaitUtils.java
+│           │   ├── JSUtils.java
+│           │   └── ConfigReader.java
+│           └── api
+│               └── ApiClient.java
+│
+├── test
+│   ├── java
+│   │   └── com.veeva.automation
+│   │       ├── pages
+│   │       │   ├── HomePage.java
+│   │       │   ├── ShopPage.java
+│   │       │   ├── DP1Page.java
+│   │       │   └── DP2Page.java
+│   │       ├── steps
+│   │       │   ├── ShopSteps.java
+│   │       │   ├── DP1Steps.java
+│   │       │   └── DP2Steps.java
+│   │       └── runner
+│   │           └── TestRunner.java
+│   │
+│   └── resources
+│       ├── features
+│       │   ├── shop.feature
+│       │   ├── dp1.feature
+│       │   └── dp2.feature
+│       ├── config
+│       │   └── application.properties
+│       └── testdata
+│           └── expectedData.json
+│
+└── build.gradle

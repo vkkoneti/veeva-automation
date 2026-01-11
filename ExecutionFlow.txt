@@ -1,0 +1,17 @@
+Developer / CI
+     ↓
+Gradle (./gradlew test)
+     ↓
+TestNG Runner
+     ↓
+Cucumber Scenarios
+     ↓
+Step Definitions
+     ↓
+Page Objects
+     ↓
+Browser / API Calls
+     ↓
+Assertions
+     ↓
+Reports Generated
