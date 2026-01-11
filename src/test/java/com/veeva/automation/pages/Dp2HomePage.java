@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class Dp2HomePage extends BasePage {
+    private static final String DP2_URL = "https://www.nba.com/sixers";
 
     // ===== Footer =====
     private final By footer =
@@ -16,7 +17,7 @@ public class Dp2HomePage extends BasePage {
             By.cssSelector("footer a");
 
     public void openDp2HomePage() {
-        openUrl("https://www.nba.com/sixers");
+        openUrl(DP2_URL);
         waitFor(footer);
     }
 

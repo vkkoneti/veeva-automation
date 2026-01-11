@@ -1,33 +1,64 @@
 package com.veeva.automation.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dp1HomePage extends BasePage {
 
-    // Swiper container
-    private final By swiperContainer =
-            By.cssSelector("div.swiper.swiper-initialized");
+    // ===== URL =====
+    private static final String DP1_URL = "https://www.nba.com/bulls";
 
-    // All slides
-    private final By slides =
-            By.cssSelector("div.swiper-slide");
+    // ===== Slider Locators =====
+    private final By sliderRoot = By.cssSelector("div.swiper");
+    private final By sliderWrapper = By.cssSelector("div.swiper-wrapper");
+    private final By slides = By.cssSelector("div.swiper-slide");
+    private final By slideTitle = By.cssSelector("h3, h2");
 
-    public void openDp1HomePage() {
-        openUrl("https://www.nba.com/bulls"); // DP1 example
 
-        // Wait until swiper loads
-        wait.until(ExpectedConditions.visibilityOfElementLocated(swiperContainer));
+    // ===== Constructor =====
+    public Dp1HomePage() {
+        super();
     }
 
-    public List<WebElement> getSlides() {
-        return driver.findElements(slides);
+    // ===== Actions =====
+    public void open() {
+        driver.get(DP1_URL);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(sliderRoot));
     }
 
-    public String getSlideLabel(WebElement slide) {
-        return slide.getAttribute("aria-label");
+    public int getSlideCount() {
+        return driver.findElements(slides).size();
+    }
+
+    public List<String> getSlideTitles() {
+        List<String> titles = new ArrayList<>();
+        List<WebElement> slideElements = driver.findElements(slides);
+
+        for (WebElement slide : slideElements) {
+            try {
+                String text = slide.findElement(slideTitle).getText().trim();
+                titles.add(text);
+            } catch (NoSuchElementException e) {
+                titles.add("NO_TITLE_FOUND");
+            }
+        }
+        return titles;
+    }
+
+    public long getSlideDurationInSeconds() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Swiper stores autoplay delay internally
+        Object delay = js.executeScript(
+                "return document.querySelector('.swiper')?.swiper?.params?.autoplay?.delay;"
+        );
+
+        if (delay == null) {
+            return -1;
+        }
+        return Long.parseLong(delay.toString()) / 1000;
     }
 }

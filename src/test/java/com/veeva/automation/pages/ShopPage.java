@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class ShopPage extends BasePage {
-
+    private static final String SHOP_URL = "https://www.nba.com/warriors";
     // ===== Popup (NOT iframe) =====
     private final By popupModal =
             By.cssSelector("div[class*='InsiderPopup_modal']");
@@ -27,7 +27,7 @@ public class ShopPage extends BasePage {
     private final By nextPage = By.cssSelector("[aria-label='Next Page']");
 
     public void openWarriorsHome() {
-        openUrl("https://www.nba.com/warriors");
+        openUrl(SHOP_URL);
         closePopupIfPresent();
     }
 

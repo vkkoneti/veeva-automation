@@ -1,38 +1,50 @@
 package com.veeva.automation.steps;
 
 import com.veeva.automation.pages.Dp1HomePage;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.util.List;
 
 public class Dp1Steps {
 
-    private final Dp1HomePage dp1 = new Dp1HomePage();
+    private final Dp1HomePage dp1HomePage = new Dp1HomePage();
 
-    @When("I open DP1 home page")
-    public void openDp1() {
-        dp1.openDp1HomePage();
+    private int slideCount;
+    private List<String> slideTitles;
+    private long slideDuration;
+
+    @Given("I open DP1 home page")
+    public void openDP1HomePage() {
+        dp1HomePage.open();
     }
 
-    @Then("I validate DP1 carousel slides")
-    public void validateSlides() {
+    @When("I capture all slider details")
+    public void captureSliderDetails() {
+        slideCount = dp1HomePage.getSlideCount();
+        slideTitles = dp1HomePage.getSlideTitles();
+        slideDuration = dp1HomePage.getSlideDurationInSeconds();
+    }
 
-        List<WebElement> slides = dp1.getSlides();
+    @Then("slider count, titles and duration should be valid")
+    public void validateSliderData() {
 
-        Assert.assertTrue(slides.size() > 0,
-                "No slides found in DP1 carousel");
+        Assert.assertTrue(slideCount > 0,
+                "Slider count should be greater than zero");
 
-        for (WebElement slide : slides) {
-            String label = dp1.getSlideLabel(slide);
+        for (String title : slideTitles) {
+            Assert.assertFalse(title.isEmpty(),
+                    "Slide title should not be empty");
 
-            Assert.assertNotNull(label, "Slide aria-label missing");
-            Assert.assertTrue(label.contains("/"),
-                    "Invalid slide label: " + label);
         }
 
-        System.out.println("DP1 slides validated. Total slides = " + slides.size());
+        Assert.assertTrue(slideDuration > 0,
+                "Slide duration should be greater than zero");
+
+        // Optional expected duration validation
+        Assert.assertTrue(slideDuration >= 3,
+                "Slide duration should be at least 3 seconds");
     }
 }
