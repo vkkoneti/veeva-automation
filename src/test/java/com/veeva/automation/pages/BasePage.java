@@ -1,5 +1,6 @@
 package com.veeva.automation.pages;
 
+import com.veeva.automation.config.ConfigReader;
 import com.veeva.automation.driver.DriverFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,7 +15,7 @@ public class BasePage {
 
     public BasePage() {
         this.driver = DriverFactory.getDriver();
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(Integer.parseInt(ConfigReader.get("timeout"))));
     }
 
     protected void openUrl(String url) {

@@ -1,5 +1,5 @@
 plugins {
-    id ("java")
+    id("java")
 }
 
 group = "com.veeva"
@@ -18,47 +18,30 @@ repositories {
 dependencies {
 
     // Selenium
-    testImplementation ("org.seleniumhq.selenium:selenium-java:4.20.0")
+    testImplementation("org.seleniumhq.selenium:selenium-java:4.20.0")
 
     // Cucumber
-    testImplementation ("io.cucumber:cucumber-java:7.14.0")
-    testImplementation ("io.cucumber:cucumber-testng:7.14.0")
+    testImplementation("io.cucumber:cucumber-java:7.14.0")
+    testImplementation("io.cucumber:cucumber-testng:7.14.0")
 
     // TestNG
-    testImplementation ("org.testng:testng:7.9.0")
+    testImplementation("org.testng:testng:7.9.0")
 
     // Logging
-    testImplementation ("org.slf4j:slf4j-api:2.0.9")
-    testImplementation ("ch.qos.logback:logback-classic:1.4.11")
-
-    // JSON (test data)
-    testImplementation ("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    testImplementation("org.slf4j:slf4j-api:2.0.9")
+    testImplementation("ch.qos.logback:logback-classic:1.4.11")
 
     // Reporting (Extent)
-    testImplementation ("com.aventstack:extentreports:5.1.1")
+    testImplementation("com.aventstack:extentreports:5.1.1")
     testImplementation("io.github.bonigarcia:webdrivermanager:5.7.0")
 
+    // Rest Assured (API skeleton)
+    testImplementation("io.rest-assured:rest-assured:5.4.0")
+
+    // Jackson (JSON handling)
+    testImplementation("com.fasterxml.jackson.core:jackson-databind:2.16.0")
+
 }
-
-
-tasks.test {
-//    useTestNG()
-//
-//    // VERY IMPORTANT
-//    //include("**/*TestRunner.class")
-//
-//    systemProperty("cucumber.plugin", "pretty")
-//    systemProperty("cucumber.glue", "com.veeva.automation")
-//    systemProperty("cucumber.features", "src/test/resources/features")
-//    systemProperty("cucumber.feature.tags", "@example")
-//
-//    testLogging {
-//        events("passed", "failed", "skipped")
-//    }
-//
-//    failOnNoDiscoveredTests = false
-}
-
 
 tasks.register<JavaExec>("cucumber") {
     group = "verification"
@@ -74,5 +57,12 @@ tasks.register<JavaExec>("cucumber") {
         "src/test/resources/features"
     )
 }
+tasks.test {
+    useTestNG()
+    testLogging {
+        events("PASSED", "FAILED", "SKIPPED")
+    }
+}
+
 
 

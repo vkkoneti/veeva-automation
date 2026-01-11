@@ -1,5 +1,6 @@
 package com.veeva.automation.pages;
 
+import com.veeva.automation.config.ConfigReader;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -9,7 +10,8 @@ import java.util.List;
 public class Dp1HomePage extends BasePage {
 
     // ===== URL =====
-    private static final String DP1_URL = "https://www.nba.com/bulls";
+    //private static final String DP1_URL = "https://www.nba.com/bulls";
+    private static final String DP1_URL =  ConfigReader.get("base.url.dp1");
 
     // ===== Slider Locators =====
     private final By sliderRoot = By.cssSelector("div.swiper");
